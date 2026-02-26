@@ -44,13 +44,6 @@
         </div>
     </header>
 
-    <section class="quote-section">
-        <div class="container">
-            <blockquote>"The only workout you regret is the one that didn't happen—or the one that caused an injury
-                because it wasn't built for you."</blockquote>
-        </div>
-    </section>
-
     <section id="services" class="services">
         <div class="section-title">
             <h2>Premium Programs</h2>
@@ -117,24 +110,27 @@
         </div>
     </section>
 
-    <section id="join" class="form-section">
-        <div class="form-container">
-            <div class="form-info">
-                <h2>Ready to Start?</h2>
-                <p>Fill out this assessment. Yathish will review your medical history and contact you via WhatsApp/Call
-                    to discuss your custom plan.</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
+   <section id="join" class="form-section">
+    <div class="form-container">
 
+        <!-- Centered Header -->
+        <div class="assessment-header">
+            <h2>Ready to Start?</h2>
+            <p>
+                Fill out this assessment. Yathish will review your medical history
+                and contact you via WhatsApp/Call to discuss your custom plan.
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="form-card">
             <form id="assessmentForm" class="assessment-form">
+
                 <div class="form-row">
                     <input type="text" name="name" placeholder="Full Name" required>
                     <input type="email" name="email" placeholder="Email Address" required>
                 </div>
+
                 <div class="form-row">
                     <input type="tel" name="phone" placeholder="WhatsApp Number" required>
                     <select name="goal" required>
@@ -153,7 +149,10 @@
                 </div>
 
                 <div class="medical-section">
-                    <label>Medical History (Select all that apply):</label>
+                    <label class="medical-title">
+                        Medical History (Select all that apply):
+                    </label>
+
                     <div class="checkbox-group">
                         <label><input type="checkbox" name="med" value="breathing"> Breathing</label>
                         <label><input type="checkbox" name="med" value="cardiac"> Cardiac</label>
@@ -166,13 +165,39 @@
                 <textarea name="injuries" rows="3"
                     placeholder="List any previous surgeries or major injuries..."></textarea>
 
-                <button type="submit" class="btn-submit">Submit Assessment</button>
+                <button type="submit" class="btn-submit">
+                    Submit Assessment
+                </button>
+
             </form>
         </div>
-    </section>
 
-    <footer>
-        <p>&copy; 2026 Yathish Fitness. All rights reserved.</p>
+    </div>
+</section>
+
+    <footer class="footer">
+        <div class="container footer-wrapper">
+
+            <!-- Brand Section -->
+            <div class="footer-brand">
+                <h3>Yathish Fitness</h3>
+                <p>Transforming lives through structured training & smart coaching.</p>
+            </div>
+
+            <!-- Social Section -->
+            <div class="footer-social">
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 Yathish Fitness. All Rights Reserved.
+            <br>
+            Designed & Developed by <span class="brand-highlight">LaunchMyPortfolio</span>
+        </div>
     </footer>
     <script>
         document.getElementById('assessmentForm').addEventListener('submit', async function (e) {
@@ -212,7 +237,7 @@
 
                 if (response.ok) {
                     // Trigger the success modal with WhatsApp/Email options
-                    showSuccessModal(payload);
+                    alert("Query sent successfully!. will reach out to you soon...");
                 } else {
                     throw new Error('Failed to send');
                 }

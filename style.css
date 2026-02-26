@@ -280,3 +280,227 @@ input, select, textarea { width: 100%; padding: 12px; background: #0a0a0a; borde
     .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 }
+
+/* ===== FOOTER ===== */
+.footer {
+    background: #0f0f0f;
+    padding: 60px 0 20px;
+    margin-top: 0px;
+    border-top: 1px solid #1f1f1f;
+}
+.footer-wrapper {
+    display: flex;
+    flex-direction: column;   /* stack vertically */
+    align-items: center;      /* center horizontally */
+    text-align: center;
+    gap: 20px;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;     /* stack items */
+    align-items: center;        /* horizontal center */
+    text-align: center;         /* text center */
+    gap: 15px;
+}
+
+/* Heading */
+.footer-brand h3 {
+    color: #fff;
+    font-size: 22px;
+    margin: 0;
+}
+
+/* Description */
+.footer-brand p {
+    color: #aaa;
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Social Icons */
+.footer-social {
+    margin-top: 10px;
+}
+
+.footer-social a {
+    color: #aaa;
+    font-size: 20px;
+    margin: 0 10px;   /* equal spacing */
+    transition: 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: #a6ff00;
+    transform: translateY(-3px);
+}
+
+/* Bottom Section */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    color: #777;
+    font-size: 14px;
+    border-top: 1px solid #1f1f1f;
+    padding-top: 20px;
+}
+
+/* Highlight */
+.brand-highlight {
+    color: #a6ff00;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .footer-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-social {
+        margin-top: 20px;
+    }
+}
+/* ===== FORM SECTION ===== */
+.form-section {
+    background: #0f0f0f;
+    padding: 100px 0;
+}
+.form-container {
+    display: flex;
+    flex-direction: column;   /* stack header + form */
+    align-items: center;      /* center horizontally */
+    text-align: center;
+}
+
+/* ===== Centered Header ===== */
+.assessment-header {
+    max-width: 700px;
+    margin-bottom: 40px;   /* space between text and form */
+}
+
+.assessment-header h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.assessment-header p {
+    color: #777;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ===== Form Card ===== */
+.form-card {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* ===== Form Layout ===== */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-row.metrics input {
+    flex: 1;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 14px;
+    background: #0f0f0f;
+    border: 1px solid #222;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #a6ff00;
+}
+
+/* ===== Medical Section ===== */
+.medical-section {
+    margin-top: 25px;
+    text-align: left;   /* keep checkboxes aligned left inside form */
+}
+
+/* Title */
+.medical-title {
+    display: block;
+    margin-bottom: 15px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* Checkbox Grid */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 20px;   /* row gap | column gap */
+    margin-bottom: 20px;
+}
+
+/* Each label */
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;          /* space between box and text */
+    color: #ccc;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Checkbox styling */
+.checkbox-group input[type="checkbox"] {
+    accent-color: #a6ff00;  /* premium green */
+    width: 16px;
+    height: 16px;
+}
+@media (max-width: 600px) {
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Button ===== */
+.btn-submit {
+    margin-top: 10px;
+    padding: 16px;
+    width: 100%;
+    background: #a6ff00;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: #8be000;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .assessment-header h2 {
+        font-size: 36px;
+    }
+
+    .form-card {
+        padding: 30px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+}
