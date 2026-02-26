@@ -175,25 +175,6 @@
         <p>&copy; 2026 Yathish Fitness. All rights reserved.</p>
     </footer>
     <script>
-        // 1. Smooth Scrolling for Navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // 2. Form Submission Alert (Basic)
-        const form = document.querySelector('.assessment-form');
-        form.addEventListener('submit', function () {
-            // This is a placeholder for your Formspree integration
-            console.log("Assessment sent to Yathish Fitness...");
-        });
-    </script>
-
-    <script>
         document.getElementById('assessmentForm').addEventListener('submit', async function (e) {
             e.preventDefault();
             const submitBtn = e.target.querySelector('.btn-submit');
