@@ -1,3 +1,9 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
 :root {
     --neon-green: #ccff00;
     --dark: #0a0a0a;
@@ -20,7 +26,18 @@ nav { display: flex; justify-content: space-between; align-items: center; paddin
 .nav-btn { background: var(--neon-green); color: black !important; padding: 8px 20px; border-radius: 4px; }
 
 /* HERO */
-.hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.6), var(--dark)), url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070'); background-size: cover; background-position: center; }
+/* Update HERO */
+.hero { 
+    min-height: 100vh; /* Changed from height to min-height */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    background: linear-gradient(rgba(0,0,0,0.6), var(--dark)), url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070'); 
+    background-size: cover; 
+    background-position: center; 
+    padding: 100px 20px; /* Add padding for mobile content spacing */
+}
 .hero-content { max-width: 900px; padding: 0 20px; }
 .badge { color: var(--neon-green); border: 1px solid var(--neon-green); padding: 5px 15px; border-radius: 50px; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; }
 .hero h1 { font-family: 'Montserrat'; font-size: 4.5rem; text-transform: uppercase; line-height: 1; margin: 20px 0; }
@@ -47,9 +64,16 @@ input, select, textarea { width: 100%; padding: 12px; background: #0a0a0a; borde
 .btn-submit { width: 100%; padding: 15px; background: var(--neon-green); border: none; font-weight: 800; cursor: pointer; border-radius: 4px; margin-top: 20px; }
 
 @media (max-width: 768px) {
-    .hero h1 { font-size: 2.5rem; }
-    .form-container { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
+    .hero h1 { 
+        font-size: 2.2rem; /* Reduced slightly more for better fit */
+        line-height: 1.2;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .hero-content {
+        padding: 0 10px;
+    }
 }
 
 /* GALLERY STYLING */
