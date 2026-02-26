@@ -223,7 +223,7 @@
 
             try {
                 // Calling your internal Cloudflare Function
-                const response = await fetch('/functions/send-mail', {
+                const response = await fetch('/send-mail', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
