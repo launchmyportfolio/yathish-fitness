@@ -14,6 +14,13 @@ export async function onRequestPost(context) {
   try {
     const data = await request.json();
 
+    if (!env.RESEND_API_KEY) {
+      return new Response(
+        JSON.stringify({ error: "Missing RESEND_API_KEY" }),
+        { status: 500, headers: corsHeaders }
+      );
+    }
+
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -22,7 +29,7 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         from: "Yathish Fitness <onboarding@resend.dev>",
-        to: ["your-email@gmail.com"],
+        to: ["launchmyportfolio@gmail.com"],
         subject: `New Lead: ${data.name}`,
         html: `
           <h2>New Client Assessment</h2>
@@ -37,9 +44,19 @@ export async function onRequestPost(context) {
       }),
     });
 
-    return new Response(JSON.stringify({ success: true }), {
-      headers: corsHeaders,
-    });
+    const resendData = await resendResponse.json();
+
+    if (!resendResponse.ok) {
+      return new Response(
+        JSON.stringify({ error: resendData }),
+        { status: 500, headers: corsHeaders }
+      );
+    }
+
+    return new Response(
+      JSON.stringify({ success: true, resend: resendData }),
+      { headers: corsHeaders }
+    );
 
   } catch (err) {
     return new Response(
