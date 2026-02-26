@@ -110,70 +110,70 @@
         </div>
     </section>
 
-   <section id="join" class="form-section">
-    <div class="form-container">
+    <section id="join" class="form-section">
+        <div class="form-container">
 
-        <!-- Centered Header -->
-        <div class="assessment-header">
-            <h2>Ready to Start?</h2>
-            <p>
-                Fill out this assessment. Yathish will review your medical history
-                and contact you via WhatsApp/Call to discuss your custom plan.
-            </p>
-        </div>
+            <!-- Centered Header -->
+            <div class="assessment-header">
+                <h2>Ready to Start?</h2>
+                <p>
+                    Fill out this assessment. Yathish will review your medical history
+                    and contact you via WhatsApp/Call to discuss your custom plan.
+                </p>
+            </div>
 
-        <!-- Form Card -->
-        <div class="form-card">
-            <form id="assessmentForm" class="assessment-form">
+            <!-- Form Card -->
+            <div class="form-card">
+                <form id="assessmentForm" class="assessment-form">
 
-                <div class="form-row">
-                    <input type="text" name="name" placeholder="Full Name" required>
-                    <input type="email" name="email" placeholder="Email Address" required>
-                </div>
-
-                <div class="form-row">
-                    <input type="tel" name="phone" placeholder="WhatsApp Number" required>
-                    <select name="goal" required>
-                        <option value="">Select Primary Goal</option>
-                        <option value="weight-loss">Weight Loss</option>
-                        <option value="muscle-gain">Muscle Gain</option>
-                        <option value="rehab">Post-Injury Rehab</option>
-                        <option value="general-fitness">General Health</option>
-                    </select>
-                </div>
-
-                <div class="form-row metrics">
-                    <input type="number" name="age" placeholder="Age">
-                    <input type="number" name="weight" placeholder="Weight (kg)">
-                    <input type="number" name="height" placeholder="Height (cm)">
-                </div>
-
-                <div class="medical-section">
-                    <label class="medical-title">
-                        Medical History (Select all that apply):
-                    </label>
-
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="med" value="breathing"> Breathing</label>
-                        <label><input type="checkbox" name="med" value="cardiac"> Cardiac</label>
-                        <label><input type="checkbox" name="med" value="knee"> Knee/Joint</label>
-                        <label><input type="checkbox" name="med" value="spine"> Spine/Back</label>
-                        <label><input type="checkbox" name="med" value="diabetes"> Diabetes/BP</label>
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Full Name" required>
+                        <input type="email" name="email" placeholder="Email Address" required>
                     </div>
-                </div>
 
-                <textarea name="injuries" rows="3"
-                    placeholder="List any previous surgeries or major injuries..."></textarea>
+                    <div class="form-row">
+                        <input type="tel" name="phone" placeholder="WhatsApp Number" required>
+                        <select name="goal" required>
+                            <option value="">Select Primary Goal</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="muscle-gain">Muscle Gain</option>
+                            <option value="rehab">Post-Injury Rehab</option>
+                            <option value="general-fitness">General Health</option>
+                        </select>
+                    </div>
 
-                <button type="submit" class="btn-submit">
-                    Submit Assessment
-                </button>
+                    <div class="form-row metrics">
+                        <input type="number" name="age" placeholder="Age">
+                        <input type="number" name="weight" placeholder="Weight (kg)">
+                        <input type="number" name="height" placeholder="Height (cm)">
+                    </div>
 
-            </form>
+                    <div class="medical-section">
+                        <label class="medical-title">
+                            Medical History (Select all that apply):
+                        </label>
+
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="med" value="breathing"> Breathing</label>
+                            <label><input type="checkbox" name="med" value="cardiac"> Cardiac</label>
+                            <label><input type="checkbox" name="med" value="knee"> Knee/Joint</label>
+                            <label><input type="checkbox" name="med" value="spine"> Spine/Back</label>
+                            <label><input type="checkbox" name="med" value="diabetes"> Diabetes/BP</label>
+                        </div>
+                    </div>
+
+                    <textarea name="injuries" rows="3"
+                        placeholder="List any previous surgeries or major injuries..."></textarea>
+
+                    <button type="submit" class="btn-submit">
+                        Submit Assessment
+                    </button>
+
+                </form>
+            </div>
+
         </div>
-
-    </div>
-</section>
+    </section>
 
     <footer class="footer">
         <div class="container footer-wrapper">
@@ -228,24 +228,34 @@
             };
 
             try {
-                // Calling your internal Cloudflare Function
                 const response = await fetch('/send-mail', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                if (response.ok) {
-                    // Trigger the success modal with WhatsApp/Email options
-                    alert("Query sent successfully!. will reach out to you soon...");
-                } else {
+                if (!response.ok) {
                     throw new Error('Failed to send');
                 }
+
+                // ✅ Success
+                alert("Query sent successfully! We will reach out to you soon.");
+
+                this.reset(); // reset form
+                submitBtn.innerText = "Submitted ✓";
+
             } catch (err) {
                 alert("Connection error. Please try again");
                 submitBtn.innerText = "Submit Assessment";
                 submitBtn.disabled = false;
+                return;
             }
+
+            // ✅ Reset button after 3 seconds
+            setTimeout(() => {
+                submitBtn.innerText = "Submit Assessment";
+                submitBtn.disabled = false;
+            }, 3000);
         });
     </script>
     <script>
