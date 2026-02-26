@@ -13,13 +13,20 @@
 
 <body>
 
-    <nav>
+    <nav class="navbar">
         <div class="logo">YATHISH<span>FITNESS</span></div>
+
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#transformations">Results</a></li>
-            <li><a href="#join" class="nav-btn">Start Now</a></li>
+            <li><a href="#join" class="nav-btn">Get Started</a></li>
         </ul>
     </nav>
 
@@ -123,14 +130,14 @@
                 </div>
             </div>
 
-            <form action="https://formspree.io/f/YOUR_ID" method="POST" class="assessment-form">
+            <form id="assessmentForm" class="assessment-form">
                 <div class="form-row">
                     <input type="text" name="name" placeholder="Full Name" required>
                     <input type="email" name="email" placeholder="Email Address" required>
                 </div>
                 <div class="form-row">
                     <input type="tel" name="phone" placeholder="WhatsApp Number" required>
-                    <select name="goal">
+                    <select name="goal" required>
                         <option value="">Select Primary Goal</option>
                         <option value="weight-loss">Weight Loss</option>
                         <option value="muscle-gain">Muscle Gain</option>
@@ -139,19 +146,19 @@
                     </select>
                 </div>
 
-                <div class="form-row">
-                    <input type="text" name="age" placeholder="Age">
-                    <input type="text" name="weight" placeholder="Weight (kg)">
-                    <input type="text" name="height" placeholder="Height (cm)">
+                <div class="form-row metrics">
+                    <input type="number" name="age" placeholder="Age">
+                    <input type="number" name="weight" placeholder="Weight (kg)">
+                    <input type="number" name="height" placeholder="Height (cm)">
                 </div>
 
                 <div class="medical-section">
                     <label>Medical History (Select all that apply):</label>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" name="med" value="breathing"> Breathing Issues</label>
-                        <label><input type="checkbox" name="med" value="cardiac"> Cardiac Issues</label>
-                        <label><input type="checkbox" name="med" value="knee"> Knee/Joint Pain</label>
-                        <label><input type="checkbox" name="med" value="spine"> Spine/Back Issues</label>
+                        <label><input type="checkbox" name="med" value="breathing"> Breathing</label>
+                        <label><input type="checkbox" name="med" value="cardiac"> Cardiac</label>
+                        <label><input type="checkbox" name="med" value="knee"> Knee/Joint</label>
+                        <label><input type="checkbox" name="med" value="spine"> Spine/Back</label>
                         <label><input type="checkbox" name="med" value="diabetes"> Diabetes/BP</label>
                     </div>
                 </div>
@@ -187,66 +194,69 @@
     </script>
 
     <script>
-        async function handleAssessment(event) {
-            event.preventDefault();
-            const btn = document.querySelector('.btn-submit');
-            btn.innerText = "Sending...";
+        document.getElementById('assessmentForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('.btn-submit');
 
-            const formData = new FormData(event.target);
+            // UI Feedback
+            submitBtn.innerText = "Sending Assessment...";
+            submitBtn.disabled = true;
+
+            // Collect Medical Checkboxes
             const medical = [];
-            document.querySelectorAll('input[name="med"]:checked').forEach(el => medical.push(el.value));
+            document.querySelectorAll('input[name="med"]:checked').forEach(cb => {
+                medical.push(cb.value);
+            });
 
-            const data = {
+            const formData = new FormData(this);
+            const payload = {
                 name: formData.get('name'),
                 email: formData.get('email'),
                 phone: formData.get('phone'),
                 goal: formData.get('goal'),
-                height: formData.get('height'),
+                age: formData.get('age'),
                 weight: formData.get('weight'),
+                height: formData.get('height'),
                 medicalConditions: medical,
                 injuries: formData.get('injuries')
             };
 
             try {
-                // 1. Send Email via Cloudflare Worker
-                const response = await fetch('https://your-worker.your-subdomain.workers.dev', {
+                // Calling your internal Cloudflare Function
+                const response = await fetch('/functions/send-mail', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(payload)
                 });
 
                 if (response.ok) {
-                    // 2. Show Success and Options
-                    showSuccessModal(data);
+                    // Trigger the success modal with WhatsApp/Email options
+                    showSuccessModal(payload);
+                } else {
+                    throw new Error('Failed to send');
                 }
-            } catch (error) {
-                alert("Submission failed. Please try again.");
+            } catch (err) {
+                alert("Connection error. Please try again or message me on WhatsApp.");
+                submitBtn.innerText = "Submit Assessment";
+                submitBtn.disabled = false;
             }
-        }
+        });
+    </script>
+    <script>
+        const menu = document.querySelector('#mobile-menu');
+        const menuLinks = document.querySelector('.nav-links');
 
-        function showSuccessModal(data) {
-            // Creating a professional popup
-            const modal = document.createElement('div');
-            modal.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; display:flex; align-items:center; justify-content:center; text-align:center;";
+        // Toggle Mobile Menu
+        menu.addEventListener('click', function () {
+            menu.classList.toggle('is-active');
+            menuLinks.classList.toggle('active');
+        });
 
-            const waMessage = encodeURIComponent(`Hi Yathish! I just submitted my assessment. I am ${data.name} and my goal is ${data.goal}. Let's connect!`);
-
-            modal.innerHTML = `
-        <div style="background:#1a1a1a; padding:40px; border-radius:15px; border:1px solid #ccff00; max-width:400px;">
-            <h2 style="color:#ccff00; margin-bottom:10px;">Assessment Sent!</h2>
-            <p style="color:white; margin-bottom:25px;">I've received your details and will review your medical history shortly.</p>
-            
-            <a href="https://wa.me/919121078483?text=${waMessage}" style="background:#25D366; color:white; padding:15px; display:block; text-decoration:none; border-radius:5px; font-weight:bold; margin-bottom:15px;">
-                <i class="fab fa-whatsapp"></i> Chat on WhatsApp Now
-            </a>
-            
-            <button onclick="window.location.reload()" style="background:none; border:none; color:#888; cursor:pointer; text-decoration:underline;">
-                Return to Home
-            </button>
-        </div>
-    `;
-            document.body.appendChild(modal);
-        }
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(n => n.addEventListener('click', () => {
+            menu.classList.remove('is-active');
+            menuLinks.classList.remove('active');
+        }));
     </script>
 </body>
 
